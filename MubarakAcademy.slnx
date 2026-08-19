@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Dockerfile" />
+  </Folder>
   <Project Path="MubarakAcademy.Application/MubarakAcademy.Application.csproj" Id="d1f32710-27a2-4d3c-9f2c-3a501778267b" />
   <Project Path="MubarakAcademy.Domain/MubarakAcademy.Domain.csproj" Id="645c01fe-11f5-4953-98a1-287957ddf2b8" />
   <Project Path="MubarakAcademy.Infastructure/MubarakAcademy.Infastructure.csproj" Id="b9350148-1c38-45cd-8527-18b0b5dab24d" />
