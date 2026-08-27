@@ -8,7 +8,8 @@ namespace MubarakAcademy.Application.Interfaces.IServices
     public interface IStudentService
     {
         Task<IEnumerable<StudentDto>> GetAllStudentAsync();
-        Task<StudentDto?> GetStudentByIdAsync(Guid id);
+        Task<StudentDto?> GetStudentByIdAsync(Guid Id);
+        Task<StudentDto?> AddStudentAsync(StudentDto dto);
         Task<StudentDto> UpdateStudentAsync(Guid id, StudentDto dto);
         Task<bool> DeleteStudentAsync(Guid id);
     }
