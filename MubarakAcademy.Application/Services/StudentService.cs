@@ -39,9 +39,19 @@ namespace MubarakAcademy.Application.Services
         }
            
 
-        public Task<bool> DeleteStudentAsync(Guid id)
+        public async Task<bool> DeleteStudentAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var student = await _unitOfWork.Students.GetById(id);
+
+            if (student == null)
+            {
+                return false;
+            }
+
+             _unitOfWork.Students.DeleteAsync(student);
+            await _unitOfWork.SaveAsync();
+
+            return true;
         }
 
         public async Task<IEnumerable<StudentDto>> GetAllStudentAsync()
@@ -76,9 +86,30 @@ namespace MubarakAcademy.Application.Services
 
         }
 
-        public Task<StudentDto> UpdateStudentAsync(Guid id, StudentDto dto)
+        public async Task<StudentDto> UpdateStudentAsync(Guid id, StudentDto dto)
         {
-            throw new NotImplementedException();
+            var student = await _unitOfWork.Students.GetById(id);
+
+            if (student == null)
+            {
+                return null;
+            }
+            student.FirstName = dto.FirstName;
+            student.LastName = dto.LastName;
+            student.PhoneNumber = dto.PhoneNumber;
+            student.DepartmentId = dto.DepartmentId;
+
+            _unitOfWork.Students.UpdateAsync(student);
+            await _unitOfWork.SaveAsync();
+
+            return new StudentDto
+            {
+                FirstName = student.FirstName,
+                LastName = student.LastName,
+                PhoneNumber = student.PhoneNumber,
+                DepartmentName = student.Department?.DepartmentName
+            };
+        }
+
         }
     }
-}
