@@ -32,24 +32,71 @@ namespace MubarakAcademy.Application.Services
             };
         }
 
-        public Task<TeacherResponseDto> Delete(Guid id)
+        public async Task<bool> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var teacher = await _unitOfWork.Teachers.GetById(id);
+
+            if (teacher == null)
+            {
+                return false;
+            }
+             _unitOfWork.Teachers.DeleteAsync(teacher);
+            await _unitOfWork.SaveAsync();
+
+            return true;
         }
 
-        public Task<IEnumerable<TeacherResponseDto>> GetAllTeacherAsync()
+        public async Task<IEnumerable<TeacherResponseDto>> GetAllTeacherAsync()
         {
-            throw new NotImplementedException();
+            var teachers = await _unitOfWork.Teachers.GetAllAsync();
+
+            return teachers.Select(t => new TeacherResponseDto
+            {
+                FullName = t.FullName,
+                PhoneNumber = t.PhoneNumber,
+                DepartmentName = t.Department?.DepartmentName
+            }).ToList();
         }
 
-        public Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id)
+        public async Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id)
         {
-            throw new NotImplementedException();
+            var teacher = await _unitOfWork.Teachers.GetById(id);
+
+            if(teacher == null)
+            {
+                return null;
+            }
+
+            return new TeacherResponseDto
+            {
+                FullName = teacher.FullName,
+                PhoneNumber = teacher.PhoneNumber,
+                DepartmentName = teacher?.Department?.DepartmentName
+            };
         }
 
-        public Task<TeacherResponseDto> Update(TeacherDto dto, Guid id)
+        public async Task<TeacherResponseDto> Update(TeacherDto dto, Guid id)
         {
-            throw new NotImplementedException();
+            var teacher = await _unitOfWork.Teachers.GetById(id);
+
+            if(teacher == null)
+            {
+                return null;
+            }
+           dto.FullName = dto.FullName;
+           dto.PhoneNumber = dto.PhoneNumber;
+
+            _unitOfWork.Teachers.UpdateAsync(teacher);
+            await _unitOfWork.SaveAsync();
+
+            return new TeacherResponseDto
+            {
+                TeacherId = teacher.TeacherId,
+                FullName = teacher.FullName,
+                PhoneNumber = teacher.PhoneNumber,
+                DepartmentName = teacher?.Department?.DepartmentName
+            };
+        
         }
     }
 }

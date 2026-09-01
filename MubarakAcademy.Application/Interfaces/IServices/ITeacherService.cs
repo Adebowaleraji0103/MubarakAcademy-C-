@@ -11,6 +11,6 @@ namespace MubarakAcademy.Application.Interfaces.IServices
         Task<TeacherResponseDto> GetTeacherByIdAsync(Guid id);
         Task<TeacherResponseDto> AddTeacherAsync(TeacherDto dto);
         Task<TeacherResponseDto> Update(TeacherDto dto, Guid id);
-        Task<TeacherResponseDto> Delete(Guid id);
+        Task<bool> Delete(Guid id);
     }
 }
