@@ -17,6 +17,16 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var jwtSettings = builder.Configuration.GetSection("jwt");
 var secretkey = jwtSettings["key"];
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = 
+})
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
