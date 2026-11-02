@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using MubarakAcademy.Application.Interfaces.IUnitOfWork;
 using MubarakAcademy.Infastructure.Persistence.Data;
@@ -13,6 +14,9 @@ var connectionString = builder.Services.AddDbContext<ApplicationDbContext>(optio
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
+var JwtSettings = builder.Configuration.GetSection("Jwt");
+var key = JwtSettings["key"];
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
