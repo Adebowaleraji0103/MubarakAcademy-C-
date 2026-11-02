@@ -15,9 +15,8 @@ var connectionString = builder.Services.AddDbContext<ApplicationDbContext>(optio
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-var JwtSettings = builder.Configuration.GetSection("Jwt");
-var key = JwtSettings["key"];
-
+var jwtSettings = builder.Configuration.GetSection("jwt");
+var secretkey = jwtSettings["key"];
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
