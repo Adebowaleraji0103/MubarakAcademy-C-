@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using MubarakAcademy.Application.Interfaces.IUnitOfWork;
 using MubarakAcademy.Infastructure.Persistence.Data;
 using MubarakAcademy.Infastructure.Persistence.UnitOfWork;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,8 +26,18 @@ builder.Services.AddAuthentication(options =>
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(options =>
 {
-    options.TokenValidationParameters = 
-})
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateAudience = true,
+        ValidateIssuer = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+
+        ValidAudience = jwtSettings["Audience"],
+        ValidIssuer = jwtSettings["Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretkey!)),
+    };
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
