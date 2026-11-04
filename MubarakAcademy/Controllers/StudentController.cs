@@ -43,5 +43,12 @@ namespace MubarakAcademy.Controllers
             return Ok(student);
         }
 
+        [HttpDelete]
+        public async Task<IActionResult> DeleteStudentAsync(Guid Id)
+        {
+            var student = _studentService.DeleteStudentAsync(Id);
+            return Ok(student);
+        }
+
     }
 }
