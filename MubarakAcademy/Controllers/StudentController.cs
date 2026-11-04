@@ -14,9 +14,34 @@ namespace MubarakAcademy.Controllers
         {
             _studentService = studentService;
         }
+
+        [HttpGet]
         public async Task<IActionResult> GetAllStudentAsync()
         {
-
+            var students = await _studentService.GetAllStudentAsync();
+            return Ok(students);
         }
+
+        [HttpGet("GetById")]
+        public async Task<IActionResult> GetStudentByIdAsync(Guid Id)
+        {
+            var student = await _studentService.GetStudentByIdAsync(Id);
+            return Ok(student);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddStudentAsync(StudentDto dto)
+        {
+            var student = await _studentService.AddStudentAsync(dto);
+            return Ok(student);
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateStudentAsync(Guid Id, StudentDto dto)
+        {
+            var student = await _studentService.UpdateStudentAsync(Id, dto);
+            return Ok(student);
+        }
+
     }
 }
