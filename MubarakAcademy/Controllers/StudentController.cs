@@ -7,10 +7,10 @@ namespace MubarakAcademy.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class studentController : ControllerBase
+    public class StudentController : ControllerBase
     {
         private readonly IStudentService _studentService;
-        public studentController(IStudentService studentService)
+        public StudentController(IStudentService studentService)
         {
             _studentService = studentService;
         }

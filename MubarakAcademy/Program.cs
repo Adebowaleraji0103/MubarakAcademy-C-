@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using MubarakAcademy.Application.Interfaces.IServices;
 using MubarakAcademy.Application.Interfaces.IUnitOfWork;
+using MubarakAcademy.Application.Services;
 using MubarakAcademy.Infastructure.Persistence.Data;
 using MubarakAcademy.Infastructure.Persistence.UnitOfWork;
 using System.Text;
@@ -9,13 +11,14 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//var connectionString = builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Configuration.GetConnectionString("DefaultConnection");
 
 var connectionString = builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IStudentService, StudentService>();
 
 var jwtSettings = builder.Configuration.GetSection("jwt");
 var secretkey = jwtSettings["key"];
