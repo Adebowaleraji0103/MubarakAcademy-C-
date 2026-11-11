@@ -15,7 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.GetConnectionString("DefaultConnection");
 
 var connectionString = builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IStudentService, StudentService>();
